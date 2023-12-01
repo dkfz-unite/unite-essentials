@@ -3,6 +3,20 @@
 public static class EnumerableExtensions
 {
     /// <summary>
+    /// Performs given action on each element of collection.
+    /// </summary>
+    /// <typeparam name="T">Collection element type.</typeparam>
+    /// <param name="elements">Source collection of elements.</param>
+    /// <param name="action">Action to perform.</param> 
+    public static void ForEach<T>(this IEnumerable<T> elements, Action<T> action)
+    {
+        foreach (var element in elements)
+        {
+            action(element);
+        }
+    }
+
+    /// <summary>
     /// Checks if collection null or empty.
     /// </summary>
     /// <typeparam name="T">Collection element type.</typeparam>
