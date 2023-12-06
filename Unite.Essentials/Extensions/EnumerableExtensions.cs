@@ -39,6 +39,17 @@ public static class EnumerableExtensions
     }
 
     /// <summary>
+    /// Creates an array from IEnumerable<T> if it's not empty.
+    /// </summary>
+    /// <typeparam name="T">Collection element type.</typeparam>
+    /// <param name="source">Source collection of elements.</param>
+    /// <returns>Array of elements or null if source collection is empty.</returns> 
+    public static T[] ToArrayOrNull<T>(this IEnumerable<T> source)
+    {
+        return source.IsNotEmpty() ? source.ToArray() : null;
+    }
+
+    /// <summary>
     /// Iterates collection with given bucket size.
     /// </summary>
     /// <typeparam name="T">Collection element type.</typeparam>
