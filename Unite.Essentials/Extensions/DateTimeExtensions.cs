@@ -25,7 +25,7 @@ public static class DateTimeExtensions
 
     public static int RelativeFrom(this DateTime eventDate, DateTime anchorDate)
     {
-        return (Normalise(eventDate) - Normalise(anchorDate)).Days;
+        return (Normalise(eventDate) - Normalise(anchorDate)).Days + 1;
     }
 
 

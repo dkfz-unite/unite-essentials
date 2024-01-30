@@ -25,6 +25,6 @@ public static class DateOnlyExtensions
 
     public static int RelativeFrom(this DateOnly eventDate, DateOnly anchorDate)
     {
-        return eventDate.DayNumber - anchorDate.DayNumber;
+        return eventDate.DayNumber - anchorDate.DayNumber + 1;
     }
 }
