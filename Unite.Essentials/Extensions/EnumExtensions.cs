@@ -37,7 +37,7 @@ public static class EnumExtensions
     {
         var attribute = field?.GetCustomAttributes(typeof(Attributes.EnumAliasAttribute), false).FirstOrDefault() as Attributes.EnumAliasAttribute;
 
-        value = !string.IsNullOrWhiteSpace(attribute?.Name) ? attribute.Name : null;
+        value = !string.IsNullOrWhiteSpace(attribute?.Value) ? attribute.Value : null;
 
         return value != null;
     }

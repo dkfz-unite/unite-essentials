@@ -36,7 +36,7 @@ public sealed class EnumAliasJsonConverter<TEnum> : JsonConverter<TEnum>
 
                 bool compare(string name) => string.Equals(name, value, _comparison);
 
-                var canonicalAlias = aliases.FirstOrDefault(alias => compare(alias.Attribute.Name));
+                var canonicalAlias = aliases.FirstOrDefault(alias => compare(alias.Attribute.Value));
                 if (canonicalAlias != null)
                     return (TEnum)canonicalAlias.Field.GetValue(null);
 
@@ -54,7 +54,7 @@ public sealed class EnumAliasJsonConverter<TEnum> : JsonConverter<TEnum>
         var alias = GetAliasedField(value.ToString());
 
         if (alias != null)
-            writer.WriteStringValue(alias.Attribute.Name);
+            writer.WriteStringValue(alias.Attribute.Value);
         else
             GetDefaultConverter(options).Write(writer, value, options);
     }

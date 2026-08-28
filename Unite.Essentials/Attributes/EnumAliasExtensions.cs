@@ -20,7 +20,7 @@ public static class EnumAliasExtensions
             .OfType<EnumAliasAttribute>()
             .FirstOrDefault();
 
-        return attribute?.Name ?? value.ToString();
+        return attribute?.Value ?? value.ToString();
         
     }
 }
