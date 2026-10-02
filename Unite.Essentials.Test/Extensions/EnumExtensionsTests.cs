@@ -32,6 +32,48 @@ public class EnumExtensionsTests
         Assert.AreEqual("99", result);
     }
 
+    [DataTestMethod]
+    [DataRow("aliased-value", TestEnum.Aliased)]
+    [DataRow("ALIASED-VALUE", TestEnum.Aliased)]
+    [DataRow("alias", TestEnum.Aliased)]
+    [DataRow("ALIAS", TestEnum.Aliased)]
+    [DataRow(" alias ", TestEnum.Aliased)]
+    [DataRow("Plain", TestEnum.Plain)]
+    [DataRow("plain", TestEnum.Plain)]
+    [DataRow("Defined", TestEnum.Defined)]
+    public void FromAliasString_WithAliasSynonymOrName_ReturnsEnumValue(string value, TestEnum expected)
+    {
+        var result = value.FromAliasString<TestEnum>();
+
+        Assert.AreEqual(expected, result);
+    }
+
+    [TestMethod]
+    public void FromAliasString_WithAliasMatchingAnotherSynonym_PrefersCanonicalAlias()
+    {
+        var result = "alias-value".FromAliasString<TestEnum>();
+
+        Assert.AreEqual(TestEnum.Both, result);
+    }
+
+    [DataTestMethod]
+    [DataRow("")]
+    [DataRow(" ")]
+    [DataRow("unknown")]
+    [DataRow("1")]
+    [DataRow("99")]
+    [DataRow("Aliased, Both")]
+    public void FromAliasString_WithInvalidValue_ThrowsFormatException(string value)
+    {
+        Assert.ThrowsException<FormatException>(() => value.FromAliasString<TestEnum>());
+    }
+
+    [TestMethod]
+    public void FromAliasString_WithNull_ThrowsArgumentNullException()
+    {
+        Assert.ThrowsException<ArgumentNullException>(() => ((string)null).FromAliasString<TestEnum>());
+    }
+
     [TestMethod]
     public void ToDefinitionString_WithEnumMember_ReturnsEnumMemberValue()
     {
@@ -72,9 +114,9 @@ public class EnumExtensionsTests
         Assert.AreEqual("99", result);
     }
 
-    private enum TestEnum
+    public enum TestEnum
     {
-        [EnumAlias("aliased-value", "alias")]
+        [EnumAlias("aliased-value", "alias", "alias-value")]
         Aliased = 1,
 
         [EnumMember(Value = "defined-value")]
